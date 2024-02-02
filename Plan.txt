@@ -1,0 +1,34 @@
+Server 1:
+
+USER:
+Choose what role{s} to ping
+the msg : This is a update
+
+
+
+Server 2 and 3
+
+BOT:
+Pings: the role chossen
+
+shows : This is a update
+
+setup: 
+
+    NEED:
+        guild ids of the servvers the bot needs
+        channel ids of the channels there supose to be in 
+        the role thaT is supsoe to use this 
+
+
+
+
+
+
+
+        const recived_ids = interaction.options.getString('discord_ids');
+    GuildIds.push(recived_ids);
+
+    interaction.reply(GuildIds[0]);
+    console.log(GuildIds);
+    
