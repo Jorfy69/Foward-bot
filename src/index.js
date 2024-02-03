@@ -42,17 +42,29 @@ client.on('messageCreate', (message) => {
                     console.log(`Channel with ID ${channelId} not found in guild ${guild.name}.`);
                     return;
                 }
-                
-                const  guildRoles = client.guild.role.fetch(roleId);
-                let contentToSend = message.content;
-                roleId.forEach(wantedrole => {
-                    if (wantedrole === RoleIds)
-                    contentToSend = contentToSend.replace(`<@&${mentionedRole.id}>`, mentionedRole.toString());
-                });
 
-                channel.send(contentToSend)
-                .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
-                .catch(console.error);
+              
+                // Mention roles based on their IDs
+                RoleIds.forEach(roleid => {
+                    const roles = guild.roles 
+                    if (!roles){
+                        console.log(`Role ${roleid} is not in this server`);
+                        return;
+                    }
+                    let contentToSend = message.content;
+                    // Mention roles based on their IDs
+                    contentToSend = contentToSend.replace(`<@&${roleid}>`, roleid.toString());
+                    
+    
+                    channel.send(contentToSend)
+                    .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
+                    .catch(console.error);
+
+                })
+
+                
+
+                
                     // Send the message to the channel
                     
                 
