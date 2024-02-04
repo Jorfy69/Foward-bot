@@ -1,29 +1,35 @@
-client.on('messageCreate', (message) => {
-    if (message.channel.id === ChannelIds[0] && message.author.id === PARENT_ID){
-        console.log(`Received message '${message.content}' from ${message.author.tag} in the specific channel`);
-        
-        GuildIds.forEach(guildId => {
-            const guild = client.guilds.cache.get(guildId);
+ChannelIds.slice(1).forEach(channelId => {
+    const channel = guild.channels.cache.get(channelId);
+    if (!channel) {
+        //console.log(`Channel with ID ${channelId} not found in guild ${guild.name}.`);
+        return;
+    }
+    
+    // Define the role ID mapping for each channel
+    let roleMapping = {};
+    switch (channelId) {
+        case ChannelIds[1]:
+            roleMapping = { originalRole: RoleIds[0], newRole: RoleIds[1] };
+            break;
+        case ChannelIds[2]:
+            roleMapping = { originalRole: RoleIds[0], newRole: RoleIds[2] };
+            break;
+        // Add cases for other channels if needed
+    }
 
-            ChannelIds.slice(1).forEach(channelId => {
-                const channel = guild.channels.cache.get(channelId);
-                if (!channel) {
-                    console.log(`Channel with ID ${channelId} not found in guild ${guild.name}.`);
-                    return;
-                }
-             
-                
-                // Replace mentions with the appropriate role mention
-                const mentionedRoles = message.mentions.roles;
-                let contentToSend = message.content;
-                mentionedRoles.forEach(mentionedRole => {
-                    contentToSend = contentToSend.replace(`<@&${mentionedRole.id}>`, mentionedRole.toString());
-                });
-
-                channel.send(contentToSend)
-                    .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
-                    .catch(console.error);
-            });
-        })
-    } 
+    // Send the message with role mention replacement
+    sendMessageWithRoleReplacement(message.content, channel, roleMapping, guild);
 });
+
+// Function to send message with role mention replacement
+function sendMessageWithRoleReplacement(content, channel, roleMapping, guild) {
+    const { originalRole, newRole } = roleMapping;
+
+    // Replace role mentions in the message content
+    const contentToSend = content.replace(new RegExp(`<@&${originalRole}>`, 'g'), `<@&${newRole}>`);
+
+    // Send the modified message content
+    channel.send(contentToSend)
+        .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
+        .catch(console.error);
+}

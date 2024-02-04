@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { Client, IntentsBitField, GuildDefaultMessageNotifications} = require('discord.js');
+const { Client, IntentsBitField} = require('discord.js');
 
 const client = new Client({
     intents: [
@@ -21,54 +21,53 @@ Main = 1201143289613647962
 1201143343971848212
 1201143387449991242
 */ 
-let PARENT_ID = '681531225508544602';
-let GuildIds = ['1201143289613647962','1201143343971848212','1201143387449991242'];
-let ChannelIds = ['1201704599006740532','1202394382737735771','1202394424257024100'];
-let RoleIds = ['1203104432993214484', '1203104482620080220' ];
+
+PARENT_ID = '457938958723317771';
+GuildIds = ['1201143289613647962','1201143343971848212','1201143387449991242'];
+                 // 1202394382737735771 == 1203104432993214484
+let ChannelIds = ['1201704599006740532','1202394382737735771' , '1202394424257024100'];
+let RoleIds =    ['1203104298955833396','1203104432993214484' , '1203104482620080220' ];
+
+
+
 
 client.on('messageCreate', (message) => {
 
     if (message.channel.id === ChannelIds[0] && message.author.id === PARENT_ID){
     
-        const messageContent = message.content;
-    
-        console.log(`Received message '${messageContent}' from ${message.author.tag} in the specific channel`);
         GuildIds.forEach(guildId => {
             const guild = client.guilds.cache.get(guildId);
             
             ChannelIds.slice(1).forEach(channelId => {
                 const channel = guild.channels.cache.get(channelId);
                 if (!channel ) {
-                    console.log(`Channel with ID ${channelId} not found in guild ${guild.name}.`);
+                    //console.log(`Channel with ID ${channelId} not found in guild ${guild.name}.`);
                     return;
                 }
-
-              
-                // Mention roles based on their IDs
-                RoleIds.forEach(roleid => {
-                    const roles = guild.roles 
-                    if (!roles){
-                        console.log(`Role ${roleid} is not in this server`);
-                        return;
-                    }
-                    let contentToSend = message.content;
-                    // Mention roles based on their IDs
-                    contentToSend = contentToSend.replace(`<@&${roleid}>`, roleid.toString());
-                    
+                
+                switch (channelId){
+                    case ChannelIds[1]:  
+                        contentToSend = message.content.replace(new RegExp(`<@&${RoleIds[0]}>`, 'g'), `<@&${RoleIds[1]}>`);
+                            
+                        channel.send(contentToSend)
+                               .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
+                               .catch(console.error);
     
-                    channel.send(contentToSend)
-                    .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
-                    .catch(console.error);
-
-                })
-
-                
-
-                
-                    // Send the message to the channel
-                    
-                
-})})}});
+                        break;
+                    case ChannelIds[2]:
+                            contentToSend = message.content.replace(new RegExp(`<@&${RoleIds[0]}>`, 'g'), `<@&${RoleIds[2]}>`);
+                            
+                            channel.send(contentToSend)
+                            .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
+                            .catch(console.error);
+    
+                            break;
+    
+                    }
+            })
+        })
+    }
+});
 
 
 client.login(process.env.CLIENT_TOKEN);
