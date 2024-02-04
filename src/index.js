@@ -22,18 +22,18 @@ Main = 1201143289613647962
 1201143387449991242
 */ 
 
-PARENT_ID = '457938958723317771';
+//PARENT_ID = '457938958723317771';
+PARENT_ROLE_ID = '1203828159707881493'
 GuildIds = ['1201143289613647962','1201143343971848212','1201143387449991242'];
                  // 1202394382737735771 == 1203104432993214484
 let ChannelIds = ['1201704599006740532','1202394382737735771' , '1202394424257024100'];
-let RoleIds =    ['1203104298955833396','1203104432993214484' , '1203104482620080220' ];
-
+let RoleIds =    ['1203828402725978112','1203104432993214484' , '1203104482620080220' ];
 
 
 
 client.on('messageCreate', (message) => {
 
-    if (message.channel.id === ChannelIds[0] && message.author.id === PARENT_ID){
+    if (message.channel.id === ChannelIds[0] && message.member.roles.cache.has(PARENT_ROLE_ID)){
     
         GuildIds.forEach(guildId => {
             const guild = client.guilds.cache.get(guildId);
