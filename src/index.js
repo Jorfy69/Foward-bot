@@ -16,18 +16,14 @@ client.on('ready', (c) => {
     
 });
 
-/*s
-Main = 1201143289613647962
-1201143343971848212
-1201143387449991242
-*/ 
-
-//PARENT_ID = '457938958723317771';
-PARENT_ROLE_ID = '1203828159707881493'
-GuildIds = ['1201143289613647962','1201143343971848212','1201143387449991242'];
-                 // 1202394382737735771 == 1203104432993214484
-let ChannelIds = ['1201704599006740532','1202394382737735771' , '1202394424257024100'];
-let RoleIds =    ['1203828402725978112','1203104432993214484' , '1203104482620080220' ];
+//This is who can use the bot
+PARENT_ROLE_ID = '1203905985572511804';
+            // 1139949498458705930
+            //      torrso                         splintered skys
+GuildIds = [      '1136009314235060284',        '429517181978542080' ];
+let ChannelIds = [ '1136039448325390486',        '1139949498458705930' ];
+//these are the roles u want to ping
+let RoleIds =    [ '1136208790652469279',        '1139947979042726009'];
 
 
 
@@ -37,7 +33,8 @@ client.on('messageCreate', (message) => {
     
         GuildIds.forEach(guildId => {
             const guild = client.guilds.cache.get(guildId);
-            
+            console.log(guild)
+            console.log(guildId)
             ChannelIds.slice(1).forEach(channelId => {
                 const channel = guild.channels.cache.get(channelId);
                 if (!channel ) {
@@ -55,14 +52,12 @@ client.on('messageCreate', (message) => {
     
                         break;
                     case ChannelIds[2]:
-                            contentToSend = message.content.replace(new RegExp(`<@&${RoleIds[0]}>`, 'g'), `<@&${RoleIds[2]}>`);
+                        contentToSend = message.content.replace(new RegExp(`<@&${RoleIds[0]}>`, 'g'), `<@&${RoleIds[2]}>`);
                             
-                            channel.send(contentToSend)
-                            .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
-                            .catch(console.error);
-    
-                            break;
-    
+                        channel.send(contentToSend)
+                               .then(sentMessage => console.log(`Message sent to ${channel.name} in guild ${guild.name}: ${sentMessage.content}`))
+                               .catch(console.error);
+                        break;
                     }
             })
         })
