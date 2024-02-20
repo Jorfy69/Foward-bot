@@ -17,13 +17,13 @@ client.on('ready', (c) => {
 });
 
 //This is who can use the bot
-PARENT_ROLE_ID = '1203905985572511804';
+PARENT_ROLE_ID = 'numbersasstrings';
             // 1139949498458705930
             //      torrso                         splintered skys
-GuildIds = [      '1136009314235060284',        '429517181978542080' ];
-let ChannelIds = [ '1136039448325390486',        '1139949498458705930' ];
+GuildIds = [      'numbersasstrings',        'numbersasstrings' ];
+let ChannelIds = [ 'numbersasstrings',        'numbersasstrings' ];
 //these are the roles u want to ping
-let RoleIds =    [ '1136208790652469279',        '1139947979042726009'];
+let RoleIds =    [ 'numbersasstrings',        'numbersasstrings'];
 
 
 
