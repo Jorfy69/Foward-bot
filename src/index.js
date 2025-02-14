@@ -18,7 +18,7 @@ client.on('ready', (c) => {
 
 //This is who can use the bot
 PARENT_ROLE_ID = 'numbersasstrings';
-            // 1139949498458705930
+            
             //      torrso                         splintered skys
 GuildIds = [      'numbersasstrings',        'numbersasstrings' ];
 let ChannelIds = [ 'numbersasstrings',        'numbersasstrings' ];
